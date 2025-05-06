@@ -13,7 +13,6 @@ def load_tokens(file_path: str):
     with open(file_path, encoding="utf-8") as fh:
         for line in fh:
             tokens.extend(tok for tok in line.split() if tok.strip())
-
     return tokens
 
 def create_and_train_tokenizer(directory, trained_tokenizer_directory, vocab_size=30000, lowercase=True):
@@ -78,6 +77,7 @@ def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only
 
     # Load the base and custom tokenizers
     base_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    base_tokenizer.save_pretrained('tokenizer/bert')
     custom_tokenizer = BertTokenizer(vocab_file=vocab_file)
 
     # Get vocabularies as lists of tokens
@@ -99,7 +99,11 @@ def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only
 
     # Add prepared_tokens if exits
     if prepared_tokens_address:
-        prepared_tokens =list(dict.fromkeys( load_tokens(prepared_tokens_address)))# list, order kept
+        # prepared_tokens =list(dict.fromkeys( load_tokens(prepared_tokens_address)))# list, order kept
+        prepared_tokens =  load_tokens(prepared_tokens_address)
+        # We remove those that are already in bert
+        prepared_tokens = [token for token in prepared_tokens if token not in tokens_base]
+        # We combined prepared_tokens and unique_tokens but prepared_tokens are prioritized.
         unique_tokens = prepared_tokens + [token for token in unique_tokens if token not in prepared_tokens]
     if mode == "replace_unused":
         # Replace unused tokens with new tokens

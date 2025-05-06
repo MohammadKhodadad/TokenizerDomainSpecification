@@ -49,7 +49,7 @@ def main():
     parser.add_argument(
         "--num_tokens",
         type=int,
-        default=990,
+        default=900,
         help="Number of new tokens to add (default: %(default)s)"
     )
     parser.add_argument(
