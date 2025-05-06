@@ -5,6 +5,17 @@ import os
 import gc
 
 # Function to create and train a BertWordPieceTokenizer
+def load_tokens(file_path: str):
+    """Return a list of whitespace‑separated tokens from *file_path*."""
+    file_path = os.path.abspath(os.path.expanduser(file_path))
+
+    tokens = []
+    with open(file_path, encoding="utf-8") as fh:
+        for line in fh:
+            tokens.extend(tok for tok in line.split() if tok.strip())
+
+    return tokens
+
 def create_and_train_tokenizer(directory, trained_tokenizer_directory, vocab_size=30000, lowercase=True):
     """
     Creates and trains a BertWordPieceTokenizer using text files from the specified directory.
@@ -51,7 +62,7 @@ def create_and_train_tokenizer(directory, trained_tokenizer_directory, vocab_siz
     return vocab_file
 
 # Function to update a tokenizer by replacing unused tokens or adding new tokens
-def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only", prioitize_scibert=False):
+def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only", prioitize_scibert=False,length_threshold=3,prepared_tokens_address=None):
     """
     Updates a tokenizer by either replacing unused tokens or adding new tokens.
 
@@ -83,6 +94,13 @@ def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only
         tokens_not_in_scibert = [token for token in unique_tokens if token not in tokens_scibert]
         unique_tokens = tokens_in_scibert + tokens_not_in_scibert
 
+    # Remove tokens shorter than threshold
+    unique_tokens = [token for token in unique_tokens if len(token) >= length_threshold]
+
+    # Add prepared_tokens if exits
+    if prepared_tokens_address:
+        prepared_tokens =list(dict.fromkeys( load_tokens(prepared_tokens_address)))# list, order kept
+        unique_tokens = prepared_tokens + [token for token in unique_tokens if token not in prepared_tokens]
     if mode == "replace_unused":
         # Replace unused tokens with new tokens
         print(f"Starting token replacement for {min(num_tokens, len(unused_tokens))} tokens.")
@@ -106,7 +124,7 @@ def update_tokenizer(base_directory, vocab_file, num_tokens=9000, mode="add_only
     print(f"Tokenizer updated and saved to {base_directory}.")
 
 # Function to train and update the tokenizer, and save the modified tokenizer
-def train_and_update_tokenizer(data_directory, trained_tokenizer_directory, final_directory, vocab_size=30000, num_tokens=9000, mode="add_only",prioritize_scibert=False):
+def train_and_update_tokenizer(data_directory, trained_tokenizer_directory, final_directory, vocab_size=30000, num_tokens=9000, mode="add_only",prioritize_scibert=False, length_threshold=3, prepared_tokens_address=None):
     """
     Combines training a tokenizer and updating a base tokenizer.
 
@@ -124,7 +142,7 @@ def train_and_update_tokenizer(data_directory, trained_tokenizer_directory, fina
     vocab_file = create_and_train_tokenizer(data_directory,trained_tokenizer_directory, vocab_size)
 
     # Step 2: Update the base tokenizer with the trained vocabulary
-    update_tokenizer(final_directory, vocab_file, num_tokens, mode,prioritize_scibert)
+    update_tokenizer(final_directory, vocab_file, num_tokens, mode,prioritize_scibert, length_threshold,prepared_tokens_address)
 
 # Example usage
 if __name__ == "__main__":

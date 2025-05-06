@@ -269,6 +269,7 @@ acenaphthylen
 ##arb
 ##ethoxy
 carb
+##yc
 ##hydro
 dimethyl
 ##etr
@@ -407,6 +408,7 @@ alum
 disulf
 manganese
 epoxy
+##echn
 ##yb
 ##nit
 sti
@@ -485,6 +487,7 @@ chlorine
 ferm
 ##ryp
 ##tio
+##ycl
 plat
 zol
 ent
@@ -496,9 +499,10 @@ ful
 hyp
 ##bene
 ##ameth
+##acycl
 argon
 chl
-##acycl
+cycl
 dro
 ##opyran
 ##tit
@@ -510,7 +514,6 @@ dich
 ##ydroxy
 ##hlo
 ##hloro
-##clo
 ##yclo
 methoxy
 carbox
@@ -726,8 +729,8 @@ methanone
 ##quinoline
 12s
 17r
-##uino
 ##xal
+##uino
 ##uinoxal
 thiophene
 methylprop
@@ -990,13 +993,10 @@ oxir
 ##azocin
 ##benzoic
 ##roprop
-cyclohexane
-diazabicyclo
-dioxopyrimidin
-carbaldehyde
-iminomethyl
-trihydroxypropyl
-propane
+[unused990]
+[unused991]
+[unused992]
+[unused993]
 !
 "
 #

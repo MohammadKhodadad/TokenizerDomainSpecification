@@ -13,6 +13,21 @@ def main():
         default="./data/",
         help="Path to the directory containing raw text data (default: %(default)s)"
     )
+
+    parser.add_argument(
+        "--prepared_tokens_address",
+        type=str,
+        default="./prepared_tokens.txt",
+        help="Path to the prepared_tokens (default: %(default)s)"
+    )
+
+    parser.add_argument(
+        "--length_threshold",
+        type=int,
+        default=3,
+        help="The threshold for accepting tokens (default: %(default)s)"
+    )
+
     parser.add_argument(
         "--trained_tokenizer_directory",
         type=str,
@@ -34,7 +49,7 @@ def main():
     parser.add_argument(
         "--num_tokens",
         type=int,
-        default=700,
+        default=990,
         help="Number of new tokens to add (default: %(default)s)"
     )
     parser.add_argument(
@@ -60,7 +75,9 @@ def main():
         vocab_size=args.vocab_size,
         num_tokens=args.num_tokens,
         mode=args.mode,
-        prioritize_scibert=args.prioritize_scibert
+        prioritize_scibert=args.prioritize_scibert,
+        length_threshold=args.length_threshold,
+        prepared_tokens_address=args.prepared_tokens_address
     )
 
 if __name__ == "__main__":

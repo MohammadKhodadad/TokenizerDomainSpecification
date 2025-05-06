@@ -39,46 +39,6 @@
       "rstrip": false,
       "single_word": false,
       "special": true
-    },
-    "30470": {
-      "content": "aminopurin",
-      "lstrip": false,
-      "normalized": true,
-      "rstrip": false,
-      "single_word": false,
-      "special": false
-    },
-    "30471": {
-      "content": "##chromene",
-      "lstrip": false,
-      "normalized": true,
-      "rstrip": false,
-      "single_word": false,
-      "special": false
-    },
-    "30472": {
-      "content": "7ar",
-      "lstrip": false,
-      "normalized": true,
-      "rstrip": false,
-      "single_word": false,
-      "special": false
-    },
-    "30473": {
-      "content": "diaminomethylideneamino",
-      "lstrip": false,
-      "normalized": true,
-      "rstrip": false,
-      "single_word": false,
-      "special": false
-    },
-    "30474": {
-      "content": "dithi",
-      "lstrip": false,
-      "normalized": true,
-      "rstrip": false,
-      "single_word": false,
-      "special": false
     }
   },
   "clean_up_tokenization_spaces": true,
